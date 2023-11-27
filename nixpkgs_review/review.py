@@ -396,8 +396,9 @@ def list_packages(
         res = subprocess.run(cmd, stdout=tmp)
         if res.returncode != 0:
             raise NixpkgsReviewError(
-                f"Failed to list packages: nix-env failed with exit code {res.returncode}"
+                f"Failed to list packages: nix-env failed with exit code {res.returncode}. See {tmp}"
             )
+            print(f"Failed: {tmp}")
         tmp.flush()
         with open(tmp.name, encoding="utf-8") as f:
             return parse_packages_xml(f)
